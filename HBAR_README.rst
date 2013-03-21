@@ -71,7 +71,7 @@ Next, install the PacBio python libraries::
     $ pip install git+https://github.com/PacificBiosciences/pbdagcon.git#pbdagcon
     $ pip install git+https://github.com/PacificBiosciences/pbh5tools.git#pbh5tools
     $ pip install git+https://github.com/cschin/pypeFLOW.git#pypeflow
-    $ pip install git+https://github.com/PacificBiosciences/HBAR-DTK.git$hbar-dtk
+    $ pip install git+https://github.com/PacificBiosciences/HBAR-DTK.git#hbar-dtk
 
 If you do a ``pip freeze``, this is what you will see::
 

@@ -1,0 +1,56 @@
+What is  HBAR-DTK?
+==================
+
+HBAR-DTK stands for "Hierarchical-Based AssembleR Development ToolKit". The
+code is derived from the prototype process for developing the "Hierachical
+Genome Assembly Process (HGAP)" that PacBio(R) provides to the scientists who
+uses PacBio RS(R) for genome assembly.  For the most update-to-date instruction
+on using the PacBio's official HGAP software, one should check the
+https://github.com/PacificBiosciences/Bioinformatics-Training/wiki/HGAP link to
+see how to run HGAP from the official release.
+
+HBAR-DTK provides a small number of python scripts for testing and developing
+hierarchical-based assembly algorithms. While it might be useful for people who
+like to test it out on using PacBio(R) data for assemblies at different scales,
+it is not meant to be used by end-users who desire for a "push-button"
+bioinformatics workflow for genome assemblies. 
+
+Here is the list of the functions of the major scripts:
+
+    HBAR_WF.py:
+        a pypeflow driven workflow script to process data and submmitting jobs
+        to a SGE cluster for every steps of thehierachical genome assembly
+        process
+
+    filterM4Query.py:
+        A short script for filtering and sorting the alignment output from
+        blasr aligner so best hits of each reads to seeds are identified from
+        mutiple chuncks of the output files. This code is called by the
+        HBAR_WF.py.  It is not meant to be called directly from command line.
+
+    generate_preassemble_reads.py:
+        a script taking the output from blasr aligner and the read sequence
+        data to generate preassembled reads that can be feed into an
+        assembler. This code is called by the
+        HBAR_WF.py.  It is not meant to be called directly from command line.
+
+    tig-sense.py:
+        a hack to use pbdagcon to get consensus of all contigs from Celera Assembler
+        untig stage
+
+    tig-sense_p.py:
+        a multiprocessing version of the tig-sense.py. It can use more CPU cores for
+        the consensus tasks 
+
+Most of these code was written on-fly when it was necessary. More handy scripts
+may be added into the repository in the near furture if they are useful to make
+the manual HGAP more scalable and easier. Some of the code might need
+singificant and proper refactoring work.  While we use the code constantly and
+get good results in our own computing environment, we have limited experience
+and testing on more diversed computing environments.  However, everyone is
+welcome to download the code, modify it for installing in your system if it
+helps on automating some of these bioinformatics tasks. No official support
+from PacBio for using these scripts will be provided at this moment. However,
+bug reports or improvements suggestions are welcome.
+
+A more detailed installation note and usage can be found in the file HBAR_README.rst

@@ -1,4 +1,5 @@
 recursive-include etc *
 include Makefile
-include LICENSES.txt
-include HGAP_README.rst
+include LICENCES
+include HBAR_README.rst
+include README

@@ -55,13 +55,14 @@ from pypeflow.task import PypeTask, PypeShellTask
 from pypeflow.controller import PypeWorkflow
 from pypeflow.data import PypeLocalFile, makePypeLocalFile, fn
 
-"""
-__p4revision__ = "$Revision$"
-__p4change__ = "$Change$"
-revNum = int(__p4revision__.strip("$").split(" ")[1].strip("#"))
-changeNum = int(__p4change__.strip("$").split(":")[-1])
-__version__ = "%s-r%d-c%d" % ( pkg_resources.require("pbtools.pbhgap")[0].version, revNum, changeNum )
-"""
+try:
+    __p4revision__ = "$Revision$"
+    __p4change__ = "$Change$"
+    revNum = int(__p4revision__.strip("$").split(" ")[1].strip("#"))
+    changeNum = int(__p4change__.strip("$").split(":")[-1])
+    __version__ = "%s-r%d-c%d" % ( pkg_resources.require("pbtools.hbar-dtk")[0].version, revNum, changeNum )
+except:
+    __version__ = "pbtools.hbar-dtk-github"
 
 def prepare_data(self):
 

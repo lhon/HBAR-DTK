@@ -47,11 +47,14 @@ from multiprocessing import Pool
 from pbtools.pbdagcon.q_sense import *
 import os
 
-__p4revision__ = "$Revision$"
-__p4change__ = "$Change$"
-revNum = int(__p4revision__.strip("$").split(" ")[1].strip("#"))
-changeNum = int(__p4change__.strip("$").split(":")[-1])
-__version__ = "%s-r%d-c%d" % ( pkg_resources.require("pbtools.pbhgap")[0].version, revNum, changeNum )
+try:
+    __p4revision__ = "$Revision$"
+    __p4change__ = "$Change$"
+    revNum = int(__p4revision__.strip("$").split(" ")[1].strip("#"))
+    changeNum = int(__p4change__.strip("$").split(":")[-1])
+    __version__ = "%s-r%d-c%d" % ( pkg_resources.require("pbtools.pbhgap")[0].version, revNum, changeNum )
+except:
+    __version__ = "pbtools.hbar-dtk-github"
 
 group_id = int(sys.argv[1])
 all_norm_fasta = sys.argv[2]

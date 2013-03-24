@@ -3,7 +3,7 @@ import sys
 
 setup(
     name = 'pbtools.hbar-dtk',
-    version='0.1.0',
+    version='0.1.1',
     author='pbiDevNet',
     author_email='pbiDevNet@pacificbiosciences.com',
     license='LICENCES',
@@ -23,6 +23,6 @@ setup(
     install_requires=[
            "pbcore >= 0.1",
            "pypeflow == 0.1.0",
-           "pbtools.pbdagcon >= 0.2"
+           "pbtools.pbdagcon >= 0.2.1"
     ]
     )

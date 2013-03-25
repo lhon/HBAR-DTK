@@ -51,10 +51,32 @@ Some convenient scripts:
 
     CA_best_edge_to_GML.py:
         
-        A simple script to convert Celera(R) Assembler's "best.edges" to a GML which can be used to feed into Gephi to
-        check the topology of the best overlapping graph.
+        A simple script to convert Celera(R) Assembler's "best.edges" to a GML
+        which can be used to feed into Gephi to check the topology of the best
+        overlapping graph.
 
         Usage: python CA_best_edge_to_GML.py asm.gkp_store asm.tigStore best.edge output.gml 
+
+    circulization.py
+
+        The script provides an ad-hoc way to circularize a circular genome. The
+        logic used here: (1) check whether the ends of a contig are overlapped.
+        (2) If so, trimming both ends according the overlapped alignment. While
+        this is useful for some case, IT IS NOT REALLY A RELIABLE WAY TO
+        CIRCULARIZE A GENOME. The proper way is to look into the overlapping
+        graph to ensure one actually gets a circular overlapping graph for a
+        contig before trimming the ends. Overlapped ends can be due to repeats.
+        Please understand the subtlety of the troubles that the repeats can
+        cause during the process of assembling a genome.  One can use the
+        ``CA_best_edge_to_GML.py`` script to generate a GML file to check a
+        contig can be indeed unambiguously circularized visually.
+    
+        Uasge: python circulization.py initial_contigs.fastq 20000 /tmp circulaized_contigs.fastq
+
+               where "20000" is the length to align at the ends of each contigs and
+               "/tmp" is the location for the temporary output used to run ``blasr`` 
+
+
 
 Most of these code was written on-fly when it was necessary. More handy scripts
 may be added into the repository in the near furture if they are useful to make

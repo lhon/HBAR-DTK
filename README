@@ -18,29 +18,43 @@ bioinformatics workflow for genome assemblies.
 Here is the list of the functions of the major scripts:
 
     HBAR_WF.py:
-        a pypeflow driven workflow script to process data and submmitting jobs
+
+        A pypeflow driven workflow script to process data and submmitting jobs
         to a SGE cluster for every steps of thehierachical genome assembly
         process
 
     filterM4Query.py:
+
         A short script for filtering and sorting the alignment output from
         blasr aligner so best hits of each reads to seeds are identified from
         mutiple chuncks of the output files. This code is called by the
         HBAR_WF.py.  It is not meant to be called directly from command line.
 
     generate_preassemble_reads.py:
-        a script taking the output from blasr aligner and the read sequence
+        
+        A script taking the output from blasr aligner and the read sequence
         data to generate preassembled reads that can be feed into an
         assembler. This code is called by the
         HBAR_WF.py.  It is not meant to be called directly from command line.
 
+Some convenient scripts:
+
     tig-sense.py:
-        a hack to use pbdagcon to get consensus of all contigs from Celera Assembler
+        
+        A hack to use pbdagcon to get consensus of all contigs from Celera(R) Assembler
         untig stage
 
     tig-sense_p.py:
-        a multiprocessing version of the tig-sense.py. It can use more CPU cores for
+        
+        A multiprocessing version of the tig-sense.py. It can use more CPU cores for
         the consensus tasks 
+
+    CA_best_edge_to_GML.py:
+        
+        A simple script to convert Celera(R) Assembler's "best.edges" to a GML which can be used to feed into Gephi to
+        check the topology of the best overlapping graph.
+
+        Usage: python CA_best_edge_to_GML.py asm.gkp_store asm.tigStore best.edge output.gml 
 
 Most of these code was written on-fly when it was necessary. More handy scripts
 may be added into the repository in the near furture if they are useful to make

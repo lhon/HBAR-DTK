@@ -46,7 +46,7 @@ from pbcore.io import FastaIO
 
 frag_id_map_file = sys.argv[1]
 sequence_file = sys.argv[2]
-gtk_store = sys.argv[3]
+gkp_store = sys.argv[3]
 tig_store = sys.argv[4]
 work_tmp_dir = sys.argv[5]
 
@@ -63,7 +63,7 @@ for r in seqF:
     seq_db[r.name] = r.sequence
 
             
-args = shlex.split("tigStore -g %s -t %s 1 -D unitiglist" % (gtk_store, tig_store ))
+args = shlex.split("tigStore -g %s -t %s 1 -D unitiglist" % (gkp_store, tig_store ))
 out = subprocess.check_output(args)
 out = out.split("\n")
 for l in out:
@@ -79,7 +79,7 @@ for l in out:
     tig_ref_file = open(tig_ref_file_name, "w")
 
     frag_list_fn = "%s/frag_list_%d" % (work_tmp_dir, unitig_id)
-    tigStore_args = shlex.split("tigStore -g asm.gkpStore -t asm.tigStore/ 1 -d fr -u %d" % unitig_id)
+    tigStore_args = shlex.split("tigStore -g %s -t %s 1 -d fr -u %d" % (gkp_store, tig_store, unitig_id) )
     frags = []
     max_coor = 0
     out = subprocess.check_output(tigStore_args)

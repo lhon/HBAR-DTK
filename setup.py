@@ -15,6 +15,7 @@ setup(
                "src/tig-sense_p.py",
                "src/tig-sense.py",
                "src/CA_best_edge_to_GML.py",
+               "src/ContaminationTrimmer.py",
                "src/circulization.py"],
     package_dir = {'':'src'},
     data_files = [('{}/etc'.format(sys.prefix),['etc/asm.spec']),

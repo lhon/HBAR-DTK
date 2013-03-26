@@ -5,12 +5,82 @@ import os
 import csv
 import subprocess
 from shutil import copy2
-
+from collections import namedtuple
 from pbcore.io.FastaIO import FastaReader, FastaWriter, FastaRecord
 
-from Utils import validateInputFile, validateExecutable
-from Utils import validateInt, validateFloat
-from Utils import BlasrM1
+BlasrM1 = namedtuple('BlasrM1', ['qname', 'tname', 'qstrand', 'tstrand',
+                                 'score', 'pctsimilarity', 
+                                 'tstart', 'tend', 'tlength',
+                                 'qstart', 'qend', 'qlength',
+                                 'ncells'])
+
+
+def which(program):
+    """
+    Find and return path to local executables  
+    """
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if isExe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exeFile = os.path.join(path, program)
+            if isExe(exeFile):
+                return exeFile
+    return None
+
+def validateOutputFile( fileName ):
+    if fileName in [sys.stdout, sys.stderr]:
+        return fileName
+    return os.path.abspath( fileName )
+
+def validateExecutable( executable ):
+    exePath = which( executable )
+    try: 
+        assert exePath is not None
+    except AssertionError:
+        raise ValueError('"%s" is not a valid executable!' % executable)
+    return exePath
+
+def validateInt( integer, minValue=None, maxValue=None ):
+    try: # First we check whether the supplied parameter is an Int
+        assert isinstance(integer, int)
+    except AssertionError:
+        raise TypeError('Parameter is not an Integer!')
+    # If a minimum value is supplied, compare it to the Integer
+    if minValue is not None:
+        try:
+            assert integer >= minValue
+        except AssertionError:
+            raise ValueError("Integer is less than Minimum Value!")
+    # If a maximum value is supplied, compare it to the Integer
+    if maxValue is not None:
+        try:
+            assert integer <= maxValue
+        except AssertionError:
+            raise ValueError("Integer is greater than Maximum Value!")
+    return integer
+
+def validateFloat( floating_point, minValue=None, maxValue=None ):
+    try: # First we check whether the supplied parameter is an Int
+        assert isinstance(floating_point, float)
+    except AssertionError:
+        raise TypeError('Parameter is not a Floating Point!')
+    # If a minimum value is supplied, compare it to the Integer
+    if minValue is not None:
+        try:
+            assert floating_point >= minValue
+        except AssertionError:
+            raise ValueError("Float is less than Minimum Value!")
+    # If a maximum value is supplied, compare it to the Integer
+    if maxValue is not None:
+        try:
+            assert floating_point <= maxValue
+        except AssertionError:
+            raise ValueError("Float is greater than Maximum Value!")
+    return floating_point
 
 MIN_LENGTH = 500
 MIN_SIMILARITY = 0.9

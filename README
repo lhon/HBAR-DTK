@@ -57,7 +57,7 @@ Some convenient scripts:
 
         Usage: python CA_best_edge_to_GML.py asm.gkp_store asm.tigStore best.edge output.gml 
 
-    circulization.py
+    circulization.py:
 
         The script provides an ad-hoc way to circularize a circular genome. The
         logic used here: (1) check whether the ends of a contig are overlapped.
@@ -76,6 +76,11 @@ Some convenient scripts:
                where "20000" is the length to align at the ends of each contigs and
                "/tmp" is the location for the temporary output used to run ``blasr`` 
 
+    ContaminationTrimmer.py:
+        
+        A script contributed by Brett Bowman for trimming out vector sequences
+        or contamination.  It is useful for pooled fosmid or BAC sequence
+        assembly. It is a different coding style.
 
 
 Most of these code was written on-fly when it was necessary. More handy scripts

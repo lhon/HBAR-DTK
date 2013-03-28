@@ -31,6 +31,23 @@ def which(program):
                 return exeFile
     return None
 
+def validateInputFile( fileName, allowedSuffixes ):
+    allowedSuffixes = [allowedSuffixes] if isinstance(str, type(allowedSuffixes)) \
+                                        else allowedSuffixes
+    # First we check whether the input file has a valid suffix
+    try:            
+        assert any( [fileName.endswith(suffix) for suffix in allowedSuffixes] )
+    except AssertionError:
+        raise ValueError('File does not have an allowed suffix! %s' % \
+                                                        allowedSuffixes)
+    # Next we check whether the input file exists where specified
+    try: 
+        assert fileExists( fileName )
+    except AssertionError:
+        raise OSError('Input file does not exist!')
+    # Finally we return the absolute path to the file
+    return os.path.abspath( fileName )
+
 def validateOutputFile( fileName ):
     if fileName in [sys.stdout, sys.stderr]:
         return fileName

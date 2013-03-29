@@ -6,14 +6,26 @@ import csv
 import subprocess
 from shutil import copy2
 from collections import namedtuple
+
 from pbcore.io.FastaIO import FastaReader, FastaWriter, FastaRecord
 
-BlasrM1 = namedtuple('BlasrM1', ['qname', 'tname', 'qstrand', 'tstrand',
-                                 'score', 'pctsimilarity', 
-                                 'tstart', 'tend', 'tlength',
-                                 'qstart', 'qend', 'qlength',
-                                 'ncells'])
+BlasrM4 = namedtuple('BlasrM4', ['qname', 'tname', 'score', 'pctsimilarity', 
+                                 'qstrand', 'qstart', 'qend', 'qseqlength',
+                                 'tstrand', 'tstart', 'tend', 'tseqlength',
+                                 'mapqv', 'ncells', 'clusterScore', 
+                                 'probScore', 'numSigClusters'])
 
+MIN_LENGTH = 500
+MIN_SIMILARITY = 0.9
+NUM_PROC = 1
+
+def fileExists( filename ):
+    return os.path.exists(filename) and (os.path.getsize(filename) > 0)
+
+def isExe( filePath ):
+    if filePath is None:
+        return False
+    return os.path.isfile(filePath) and os.access(filePath, os.X_OK)
 
 def which(program):
     """
@@ -46,11 +58,6 @@ def validateInputFile( fileName, allowedSuffixes ):
     except AssertionError:
         raise OSError('Input file does not exist!')
     # Finally we return the absolute path to the file
-    return os.path.abspath( fileName )
-
-def validateOutputFile( fileName ):
-    if fileName in [sys.stdout, sys.stderr]:
-        return fileName
     return os.path.abspath( fileName )
 
 def validateExecutable( executable ):
@@ -98,10 +105,6 @@ def validateFloat( floating_point, minValue=None, maxValue=None ):
         except AssertionError:
             raise ValueError("Float is greater than Maximum Value!")
     return floating_point
-
-MIN_LENGTH = 500
-MIN_SIMILARITY = 0.9
-NUM_PROC = 1
 
 class ContaminationRemover(object):
     """
@@ -173,7 +176,7 @@ class ContaminationRemover(object):
         p = subprocess.Popen( [self.blasr,
                                '-bestn', '1',
                                '-nproc', str(self.numProc),
-                               '-m', '1',
+                               '-m', '4',
                                '-out', outputFile,
                                queryFile,
                                referenceFile] )
@@ -186,7 +189,7 @@ class ContaminationRemover(object):
         blasrHits = {}
         with open( blasrOutput, 'r') as handle:
             for row in csv.reader( handle, delimiter=' ' ):
-                hit = BlasrM1._make( row )
+                hit = BlasrM4._make( row )
                 if hit.pctsimilarity < self.minSimilarity:
                     continue
                 rec_id = hit.qname.split('/')[0]

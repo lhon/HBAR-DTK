@@ -53,8 +53,8 @@ Install ``h5py`` ( http://h5py.googlecode.com/files/h5py-2.0.1.tar.gz )::
 
     $ wget http://h5py.googlecode.com/files/h5py-2.0.1.tar.gz
     $ tar zxvf h5py-2.0.1.tar.gz
-    $ cd zxvf h5py-2.0.1
-    $ python setup.py build --hdf5=$PATH_TO_HBAR_ENV
+    $ cd h5py-2.0.1
+    $ python setup.py build --hdf5=$HBAR_HOME
     $ python setup.py install
 
 
@@ -94,7 +94,7 @@ If you do a ``pip freeze``, this is what you will see::
 Install Other HBAR Prerequisites
 --------------------------------
 
-We need BLASR for the pre-assembly mapping. BLASR is included in the SMRT®
+We need BLASR for the pre-assembly mapping. BLASR is included in the SMRTï¿½
 Analysis installation and is also available on github. You need to copy a blasr
 binary into your ``$HBAR_HOME/bin``::
 
